@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const students = [
-        "علي", "حسن", "فاطمة", "زينب", "يوسف", "أحمد", "محمد", "مريم"
+        "مريم كافي", "شذى", "اية", "نور كافي", "نور غرام","أحمد", "أويس", "رحمة", "يوسف", "عمر","أبي", "مريم"
     ];
     const studentsContainer = document.getElementById("students-container");
     const darkModeToggle = document.getElementById("darkModeToggle");
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="progress-bar-container">
                 <div class="progress-bar" id="progress-${name}"></div>
             </div>
-            <input type="text" id="goal-input-${name}" placeholder="أضف هدفًا..." autocomplete="off">
+            <input type="text" id="goal-input-${name}" placeholder="أضف هدفًا...">
             <button onclick="addGoal('${name}')">إضافة ✅</button>
             <ul class="goal-list" id="goal-list-${name}"></ul>
         `;
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             li.innerHTML = `
                 <span>${goal.text}</span>
                 <input type="checkbox" ${goal.completed ? "checked" : ""} onclick="toggleGoal('${name}', ${index})">
-                <button class="delete-btn" data-name="${name}" data-index="${index}">❌</button>
+                <button onclick="deleteGoal('${name}', ${index})">❌</button>
             `;
             goalList.appendChild(li);
         });
@@ -63,22 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     function deleteGoal(name, index) {
-        if (confirm("هل أنت متأكد من حذف هذا الهدف؟")) {
-            studentsGoals[name].splice(index, 1);
-            saveGoals();
-            updateGoals(name);
-        }
+    if (confirm("هل أنت متأكد من حذف هذا الهدف؟")) {
+        studentsGoals[name].splice(index, 1);
+        saveGoals();
+        updateGoals(name);
     }
-
-    function attachDeleteEvent() {
-        document.querySelectorAll(".delete-btn").forEach((btn) => {
-            btn.addEventListener("click", function () {
-                let name = this.getAttribute("data-name");
-                let index = parseInt(this.getAttribute("data-index"));
-                deleteGoal(name, index);
-            });
-        });
-    }
+}
+    };
 
     window.toggleGoal = function (name, index) {
         studentsGoals[name][index].completed = !studentsGoals[name][index].completed;
@@ -102,7 +93,4 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.add("dark-mode");
         darkModeToggle.textContent = "☀️ وضع النهار";
     }
-
-    // Fix: Attach delete event on load
-    setTimeout(attachDeleteEvent, 1000);
 });
