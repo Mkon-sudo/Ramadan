@@ -63,12 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     function deleteGoal(name, index) {
-        if (confirm("هل أنت متأكد من حذف هذا الهدف؟")) {
-            studentsGoals[name].splice(index, 1);
-            saveGoals();
-            updateGoals(name);
-        }
+    if (confirm("هل أنت متأكد من حذف هذا الهدف؟")) {
+        studentsGoals[name].splice(index, 1);
+        saveGoals();
+        updateGoals(name);
+        attachDeleteEvent(); // Ensure event listeners are re-attached
     }
+}
 
     function attachDeleteEvent() {
         document.querySelectorAll(".delete-btn").forEach((btn) => {
